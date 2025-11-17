@@ -14,9 +14,10 @@ Golden-Ratio-based, Razorpay-ready e-commerce starter for the Miyana™ premium 
 ## Setup
 1. `npm install`
 2. Copy `.env.example` to `.env.local` and fill Razorpay + admin values.
-3. `npm run dev`
+3. Point `MONGODB_URI` to your MongoDB instance (local or Atlas). Optional: set `MONGODB_DB` (defaults to `miyana`).
+4. `npm run dev`
 
-If installation fails in offline environments, you can still review the source; runtime requires npm registry access.
+`npm install` only installs JavaScript dependencies; it does **not** install MongoDB itself. Use your OS package manager or Atlas for Mongo. If installation fails in offline environments, you can still review the source; runtime requires npm registry access.
 
 ## Deployment
 - Optimized for Vercel (default Next.js build). Works on AWS/other hosts.
@@ -26,6 +27,10 @@ If installation fails in offline environments, you can still review the source; 
 - Use `/api/razorpay` to create orders with `RAZORPAY_KEY_ID`/`RAZORPAY_KEY_SECRET`.
 - `/api/razorpay/verify` validates signatures using HMAC-SHA256.
 - Frontend placeholder calls should open Razorpay Checkout with brand colors and Made in India tagline.
+
+## Data & MongoDB
+- `/api/products` reads from MongoDB when `MONGODB_URI` is configured; if the collection is empty it auto-seeds from `data/products.ts`.
+- Without `MONGODB_URI`, the API gracefully serves in-memory seed data so pages still render during design/development.
 
 ## Design Tokens
 - Spacing: 4 → 6 → 10 → 16 → 26 → 42 → 68 → 110 (phi-driven)
