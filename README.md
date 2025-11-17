@@ -6,6 +6,7 @@ Golden-Ratio-based, Razorpay-ready e-commerce starter for the Miyana™ premium 
 - Golden Ratio spacing, typography, and component geometry
 - Multi-generational UX (Bloomers → Gen-Alpha) with accessibility toggles
 - Razorpay API stubs (`/api/razorpay`, `/api/razorpay/verify`)
+- Authenticated checkout with NextAuth (credentials + Google/GitHub/Facebook providers)
 - Admin gate via `NEXT_PUBLIC_ADMIN_PASSWORD`
 - Policy pages required by Razorpay (Privacy, Terms, Shipping, Cancellation/Refunds)
 - LocalStorage cart + wishlist
@@ -15,7 +16,8 @@ Golden-Ratio-based, Razorpay-ready e-commerce starter for the Miyana™ premium 
 1. `npm install`
 2. Copy `.env.example` to `.env.local` and fill Razorpay + admin values.
 3. Point `MONGODB_URI` to your MongoDB instance (local or Atlas). Optional: set `MONGODB_DB` (defaults to `miyana`).
-4. `npm run dev`
+4. Add authentication secrets: `NEXTAUTH_SECRET`, optional OAuth client IDs/secrets, and the fallback `CREDENTIAL_USERNAME` / `CREDENTIAL_PASSWORD`.
+5. `npm run dev`
 
 `npm install` only installs JavaScript dependencies; it does **not** install MongoDB itself. Use your OS package manager or Atlas for Mongo. If installation fails in offline environments, you can still review the source; runtime requires npm registry access.
 
@@ -28,9 +30,10 @@ Golden-Ratio-based, Razorpay-ready e-commerce starter for the Miyana™ premium 
 - `/api/razorpay/verify` validates signatures using HMAC-SHA256.
 - Frontend placeholder calls should open Razorpay Checkout with brand colors and Made in India tagline.
 
-## Data & MongoDB
+## Data, MongoDB & Auth
 - `/api/products` reads from MongoDB when `MONGODB_URI` is configured; if the collection is empty it auto-seeds from `data/products.ts`.
 - Without `MONGODB_URI`, the API gracefully serves in-memory seed data so pages still render during design/development.
+- Authentication uses NextAuth with the MongoDB adapter. Supported providers: credentials fallback, Google, GitHub, Facebook. Add provider credentials to `.env.local` to enable.
 
 ## Design Tokens
 - Spacing: 4 → 6 → 10 → 16 → 26 → 42 → 68 → 110 (phi-driven)

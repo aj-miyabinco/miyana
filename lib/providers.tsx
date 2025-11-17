@@ -1,5 +1,6 @@
 'use client';
 import { ReactNode, useEffect, useState } from 'react';
+import { SessionProvider } from 'next-auth/react';
 import { CartProvider } from './store';
 import ThemeToggleContext from './theme-context';
 
@@ -26,8 +27,10 @@ export function Providers({ children }: { children: ReactNode }) {
   };
 
   return (
-    <ThemeToggleContext.Provider value={{ mode, toggleTheme }}>
-      <CartProvider>{children}</CartProvider>
-    </ThemeToggleContext.Provider>
+    <SessionProvider>
+      <ThemeToggleContext.Provider value={{ mode, toggleTheme }}>
+        <CartProvider>{children}</CartProvider>
+      </ThemeToggleContext.Provider>
+    </SessionProvider>
   );
 }
